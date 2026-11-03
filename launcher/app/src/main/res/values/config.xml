@@ -15,12 +15,13 @@
         <item>com.amazon.tv.launcher/com.amazon.tv.launcher.ui.MainSettingsActivity</item>
     </string-array>
 
-    <!-- Apps pinned to the dock row at the bottom, in this order. Missing apps are skipped. -->
+    <!-- Apps pinned to the dock row at the bottom, in this order. Missing apps are skipped.
+         Haier Android TV DVB2K (broadway, HaierATVT56DVB): the four apps this set is actually used for. -->
     <string-array name="dock_apps">
+        <item>com.google.android.youtube.tv</item>
         <item>com.netflix.ninja</item>
         <item>com.amazon.amazonvideo.livingroom</item>
-        <item>com.google.android.youtube.tv</item>
-        <item>in.startv.hotstar</item>
+        <item>com.mediatek.wwtv.mediaplayer</item>
     </string-array>
     <!-- With fewer dock_apps than columns (or a dock app that is not installed), the free dock slots take
          the first grid apps, so the dock never shows a gap. false leaves them empty (#162); a theme can
@@ -80,8 +81,14 @@
          the tile switch to that TV input instead (ids from dumpsys tv_input), e.g. a Live TV tile straight to
          HDMI 1: com.mediatek.wwtv.tvcenter=input:com.mediatek.tvinput/.hdmi.HDMIInputService/HW5. "package=view:uri"
          opens that URI in the package instead (ACTION_VIEW): Bbox TV's live channels are
-         fr.bouyguestelecom.tv.bbui=view:bbox://live. -->
+         fr.bouyguestelecom.tv.bbui=view:bbox://live.
+
+         Haier Android TV DVB2K (broadway): a plain tap reopened com.mediatek.wwtv.tvcenter on whatever input it
+         last remembered (Composite on this board family), so the Live TV tile names HDMI 1 explicitly. Ids on
+         this set: HW5 = HDMI 1, HW6 = HDMI 2, HW7 = HDMI 3 (dumpsys tv_input). Change HW5 to HW6/HW7 to land
+         somewhere else, or drop the line to get the stock behaviour back. -->
     <string-array name="launch_actions">
+        <item>com.mediatek.wwtv.tvcenter=input:com.mediatek.tvinput/.hdmi.HDMIInputService/HW5</item>
     </string-array>
 
     <!-- A tile's name instead of the app's own: "package=Name". It also shows above the dock. -->

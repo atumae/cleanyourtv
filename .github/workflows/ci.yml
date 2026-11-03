@@ -71,3 +71,12 @@ jobs:
           size=$(stat -c %s launcher/app/build/outputs/apk/release/app-release.apk)
           echo "release APK: $((size / 1024)) KB"
           test "$size" -lt 589824 || { echo "APK is over 576 KB; the launcher targets 1 GB TVs, keep it small"; exit 1; }
+      # Sideload build for a real TV. The release APK is signed with the debug key (see app/build.gradle),
+      # so it installs straight over ADB. Upstream CI never publishes it; this fork does, for one set.
+      - name: Upload the sideload APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: tvhome-release-apk
+          path: launcher/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+          retention-days: 30
